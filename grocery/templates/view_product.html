@@ -1,0 +1,479 @@
+{% extends 'navigation.html' %}
+{% block body %}
+{% load static %}
+
+<style>
+/* ===================================
+   PRODUCTS PAGE STYLES
+   =================================== */
+
+.products-container {
+    padding: 40px 0;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Page Header */
+.page-header {
+    background: linear-gradient(135deg, #2e7d32 0%, #4CAF50 100%);
+    color: white;
+    padding: 60px 0;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Sidebar Filters */
+.sidebar-filters {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-filters h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #4CAF50;
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+}
+
+.filter-item {
+    margin-bottom: 10px;
+}
+
+.filter-link {
+    display: block;
+    padding: 12px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-link:hover,
+.filter-link.active {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    transform: translateX(5px);
+    text-decoration: none;
+}
+
+.filter-link ion-icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Product Card */
+.product-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    background: #f5f5f5;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.1);
+}
+
+.product-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff5722 0%, #f44336 100%);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(255, 87, 34, 0.4);
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-category {
+    font-size: 0.85rem;
+    color: #4CAF50;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.product-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.product-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #4CAF50;
+}
+
+.product-price-label {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 500;
+}
+
+.add-to-cart-btn {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.add-to-cart-btn:hover {
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.add-to-cart-btn ion-icon {
+    font-size: 1.1rem;
+}
+
+/* Category Header */
+.category-header {
+    margin-bottom: 30px;
+}
+
+.category-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.category-count {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state ion-icon {
+    font-size: 5rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 1.8rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 1rem;
+}
+
+/* Mobile Toggle Button */
+.mobile-filter-toggle {
+    display: none;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .sidebar-filters {
+        position: static;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .mobile-filter-toggle {
+        display: block;
+        width: 100%;
+    }
+    
+    .sidebar-filters {
+        display: none;
+    }
+    
+    .sidebar-filters.show {
+        display: block;
+    }
+}
+
+@media (max-width: 576px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .add-to-cart-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1><ion-icon name="basket"></ion-icon> Our Fresh Products</h1>
+        <p>Explore our wide range of fresh fruits and vegetables</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="products-container">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3">
+                <button class="mobile-filter-toggle" id="filterToggle">
+                    <ion-icon name="funnel"></ion-icon> Filter Products
+                </button>
+                
+                <div class="sidebar-filters" id="sidebarFilters">
+                    <h4><ion-icon name="filter"></ion-icon> Categories</h4>
+                    <ul class="filter-list">
+                        <li class="filter-item">
+                            <a href="{% url 'view_product' 0 %}" class="filter-link {% if not cat1 %}active{% endif %}">
+                                <ion-icon name="grid"></ion-icon>
+                                All Products
+                            </a>
+                        </li>
+                        {% for i in cat %}
+                        <li class="filter-item">
+                            <a href="{% url 'view_product' i.id %}" class="filter-link {% if cat1.id == i.id %}active{% endif %}">
+                                <ion-icon name="pricetag"></ion-icon>
+                                {{i.name}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="col-lg-9">
+                <!-- Category Header -->
+                {% if cat1 %}
+                <div class="category-header">
+                    <h2 class="category-title">{{cat1.name}}</h2>
+                    <p class="category-count">{{pro1|length}} product{{pro1|length|pluralize}} available</p>
+                </div>
+                {% else %}
+                <div class="category-header">
+                    <h2 class="category-title">All Products</h2>
+                    <p class="category-count">{{pro1|length}} product{{pro1|length|pluralize}} available</p>
+                </div>
+                {% endif %}
+
+                <!-- Products Grid -->
+                {% if pro1 %}
+                <div class="products-grid">
+                    {% for j in pro1 %}
+                    <div class="product-card">
+                        <div class="product-image-wrapper">
+                            <img src="{{j.image.url}}" alt="{{j.name}}" class="product-image">
+                            {% if j.price < 50 %}
+                            <span class="product-badge">SALE</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">{{j.categary.name}}</div>
+                            <h3 class="product-name">{{j.name}}</h3>
+                            <p class="product-description">{{j.desc|truncatewords:15}}</p>
+                            <div class="product-footer">
+                                <div>
+                                    <div class="product-price-label">Price</div>
+                                    <div class="product-price">₹{{j.price}}</div>
+                                </div>
+                                <form action="{% url 'add_cart' j.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="add-to-cart-btn">
+                                        <ion-icon name="cart"></ion-icon>
+                                        Add to Cart
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <ion-icon name="sad-outline"></ion-icon>
+                    <h3>No Products Found</h3>
+                    <p>We couldn't find any products in this category. Please check back later!</p>
+                </div>
+                {% endif %}
+
+                <!-- Recommended Products Section -->
+                {% if prod %}
+                <div style="margin-top: 60px;">
+                    <div class="category-header">
+                        <h2 class="category-title">
+                            <ion-icon name="heart"></ion-icon> Recommended for You
+                        </h2>
+                        <p class="category-count">Based on your browsing history</p>
+                    </div>
+                    
+                    <div class="products-grid">
+                        {% for j in prod %}
+                        <div class="product-card">
+                            <div class="product-image-wrapper">
+                                <img src="{{j.image.url}}" alt="{{j.name}}" class="product-image">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category">{{j.categary.name}}</div>
+                                <h3 class="product-name">{{j.name}}</h3>
+                                <p class="product-description">{{j.desc|truncatewords:15}}</p>
+                                <div class="product-footer">
+                                    <div>
+                                        <div class="product-price-label">Price</div>
+                                        <div class="product-price">₹{{j.price}}</div>
+                                    </div>
+                                    <form action="{% url 'add_cart' j.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="add-to-cart-btn">
+                                            <ion-icon name="cart"></ion-icon>
+                                            Add to Cart
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Mobile filter toggle
+document.getElementById('filterToggle').addEventListener('click', function() {
+    document.getElementById('sidebarFilters').classList.toggle('show');
+});
+
+// Add to cart animation
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        this.innerHTML = '<ion-icon name="checkmark-circle"></ion-icon> Added!';
+        setTimeout(() => {
+            this.innerHTML = '<ion-icon name="cart"></ion-icon> Add to Cart';
+        }, 2000);
+    });
+});
+</script>
+
+{% endblock %}

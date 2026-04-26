@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <title>AgroFast - Fresh Fruits and Vegetables</title>
+  <link rel="icon" href="images/favicon.ico">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="AgroFast - Fresh Fruits & Vegetables Delivery">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- Ionicons -->
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+<script>
+    $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+  </script>
+  
+  <style>
+  /* ===== DATA TABLE STYLES ===== */
+  * {
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 20%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  border-radius: 5px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#myTable th {
+  text-align: left;
+  padding: 15px;
+  background: linear-gradient(135deg, #2e7d32 0%, #4CAF50 100%);
+  color: white;
+  font-weight: 600;
+}
+
+#myTable td {
+  text-align: left;
+  padding: 12px;
+  background-color: white;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f5f5f5;
+}
+
+.button {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+}
+
+.button1 {
+    border-radius: 25px;
+}
+
+  /* ===== SCROLLBAR STYLES ===== */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4CAF50 0%, #2e7d32 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #45a049 0%, #1b5e20 100%);
+}
+
+  /* ===== PROFESSIONAL NAVBAR STYLES ===== */
+.navbar-custom {
+    background: linear-gradient(135deg, #2e7d32 0%, #4CAF50 100%);
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand ion-icon {
+    font-size: 2rem;
+    margin-right: 10px;
+    color: #ffeb3b;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    color: #ffeb3b !important;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 10px 18px !important;
+    margin: 0 3px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .nav-link ion-icon {
+    margin-right: 6px;
+    font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: #ffeb3b !important;
+}
+
+.navbar-nav .nav-link.active {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.nav-user-info {
+    color: #ffeb3b !important;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.dropdown-menu {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: none;
+    margin-top: 10px;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    padding-left: 25px;
+}
+
+.btn-cart {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    color: #2e7d32;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+}
+
+.btn-cart ion-icon {
+    font-size: 1.3rem;
+    margin-right: 5px;
+}
+
+.cart-badge {
+    background: #ff5722;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: 5px;
+    box-shadow: 0 2px 8px rgba(255, 87, 34, 0.4);
+}
+
+.navbar-toggler {
+    border: 2px solid #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Sticky Navbar */
+.navbar-custom.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 991px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .navbar-nav {
+        margin-top: 15px;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 5px 0;
+    }
+    
+    .btn-cart {
+        margin-top: 10px;
+        justify-content: center;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Professional Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid px-4">
+    <!-- Brand Logo -->
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <ion-icon name="leaf"></ion-icon>
+      AgroFast
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ml-auto align-items-center">
+        
+        <!-- ADMIN NAVIGATION -->
+        {% if request.user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_home' %}">
+            <ion-icon name="home-sharp"></ion-icon>Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_user' %}">
+            <ion-icon name="people"></ion-icon>View Users
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_viewBooking' %}">
+            <ion-icon name="logo-bitcoin"></ion-icon>View Bookings
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_feedback' %}">
+            <ion-icon name="chatbubbles"></ion-icon>Feedback
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            <ion-icon name="albums"></ion-icon>Products
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
+            <a class="dropdown-item" href="{% url 'admin_view_product' %}">View Products</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            <ion-icon name="apps"></ion-icon>Categories
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'add_categary' %}">Add Category</a>
+            <a class="dropdown-item" href="{% url 'view_categary' %}">View Categories</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            <ion-icon name="search"></ion-icon>Search
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'search_booking' %}">Search Booking</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            <ion-icon name="document-text"></ion-icon>Reports
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'bookingbetweendate_report' %}">Booking Reports</a>
+          </div>
+        </li>
+        {% endif %}
+
+        <!-- USER NAVIGATION (Logged In) -->
+        {% if request.user.username %}
+        {% if not request.user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">
+            <ion-icon name="home-sharp"></ion-icon>Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_booking' %}">
+            <ion-icon name="receipt"></ion-icon>My Bookings
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'send_feedback' request.user.id %}">
+            <ion-icon name="chatbubble-ellipses"></ion-icon>Feedback
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_product' 0 %}">
+            <ion-icon name="basket"></ion-icon>Products
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'change_password' %}">
+            <ion-icon name="key"></ion-icon>Change Password
+          </a>
+        </li>
+        {% endif %}
+        {% else %}
+
+        <!-- GUEST NAVIGATION -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">
+            <ion-icon name="home-sharp"></ion-icon>Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">
+            <ion-icon name="information-circle"></ion-icon>About
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">
+            <ion-icon name="call"></ion-icon>Contact
+          </a>
+        </li>
+        {% endif %}
+
+        <!-- USER INFO & AUTH -->
+        {% if request.user.is_authenticated %}
+        {% if not request.user.is_staff %}
+        <li class="nav-item">
+          <a href="{% url 'profile' %}" class="nav-link nav-user-info">
+            <ion-icon name="person-circle"></ion-icon>
+            Welcome, {{request.user.username}}
+          </a>
+        </li>
+        {% endif %}
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">
+            <ion-icon name="log-out"></ion-icon>Logout
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">
+            <ion-icon name="log-in"></ion-icon>User Login
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login_admin' %}">
+            <ion-icon name="shield-checkmark"></ion-icon>Admin Login
+          </a>
+        </li>
+        {% endif %}
+
+        <!-- CART BUTTON -->
+        {% if not request.user.is_staff %}
+        {% if request.user.username %}
+        <li class="nav-item ml-2">
+          <a href="{% url 'cart' %}" class="btn btn-cart">
+            <ion-icon name="cart"></ion-icon>
+            <span class="cart-badge">{{num1|default:"0"}}</span>
+            <span class="ml-2">Cart</span>
+          </a>
+        </li>
+        {% endif %}
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content Area -->
+{% block body %}
+{% endblock %}
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4 mt-5">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5><ion-icon name="leaf" style="color: #4CAF50;"></ion-icon> AgroFast</h5>
+                <p class="text-muted">Fresh Fruits & Vegetables Delivered Daily</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6>Quick Links</h6>
+                <p class="mb-0">
+                    <a href="{% url 'about' %}" class="text-white-50">About</a> | 
+                    <a href="{% url 'contact' %}" class="text-white-50">Contact</a> | 
+                    <a href="#" class="text-white-50">Privacy</a>
+                </p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6>Follow Us</h6>
+                <p>
+                    <a href="#" class="text-white mx-2"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+        <hr class="bg-secondary">
+        <p class="mb-0">&copy; 2026 AgroFast. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Custom Scripts -->
+<script>
+    // Sticky Navbar on Scroll
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 100) {
+            $('.navbar-custom').addClass('sticky');
+        } else {
+            $('.navbar-custom').removeClass('sticky');
+        }
+    });
+
+    // Active Link Highlighting
+    $(document).ready(function() {
+        var currentPath = window.location.pathname;
+        $('.navbar-nav .nav-link').each(function() {
+            var linkPath = $(this).attr('href');
+            if (currentPath === linkPath) {
+                $(this).addClass('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
